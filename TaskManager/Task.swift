@@ -9,9 +9,15 @@
 import Foundation
 
 class Task: Timer {
+    var taskTime = TimeDeclaration()
     let name : String
-    var isCompleted = false
+    var isCompleted = false{
+        didSet {
+            completedDate = taskTime.formatter.date(from: taskTime.formatter.string(from: Date()))
+        }
+    }
     var description : String
+    var completedDate : Date?
     var status : String {
         return self.isCompleted ? " (Completed)" : self.isLate ? " (Late)" : " (In Progress)"
     }
@@ -22,8 +28,8 @@ class Task: Timer {
     init(name: String, description: String, dueDate: Date) {
         self.name = name
         self.description = description
+        self.completedDate = nil
         super.init(dueDate: dueDate)
-        self.description = description
     }
     
 }

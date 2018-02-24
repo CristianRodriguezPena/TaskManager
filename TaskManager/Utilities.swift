@@ -15,7 +15,7 @@ func lineSpaces(lines: Int) {
 }
 
 func userInput<T>(question: String?) -> T {
-    let time = Time()
+    let time = TimeDeclaration()
     if let questionCheck = question {
         print(questionCheck)
     }
@@ -36,9 +36,14 @@ func userInput<T>(question: String?) -> T {
     if T.self == String.self && realResponse != "" {
         return realResponse as! T
     }
-    
     lineSpaces(lines: 1)
+    print("That is not a valid input, please enter an \(T.self)")
     return userInput(question: question)
 }
+
+
+
+
+
 
 

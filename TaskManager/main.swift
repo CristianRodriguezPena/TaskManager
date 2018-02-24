@@ -10,31 +10,3 @@ import Foundation
 
 var itBegin = TaskManager()
 itBegin.launch()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//use property observer

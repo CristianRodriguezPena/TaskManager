@@ -18,10 +18,10 @@ class Timer {
     }
 }
 
-class Time {
+class TimeDeclaration {
     let formatter = DateFormatter()
     init() {
-        formatter.dateFormat = "MM/dd/yy"
+        formatter.dateFormat = "MM/dd/yy H:mm a"
         formatter.timeZone = TimeZone(abbreviation: "GMT")
     }
 }

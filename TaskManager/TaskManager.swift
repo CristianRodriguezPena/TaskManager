@@ -8,8 +8,8 @@
 
 import Foundation
 
-class TaskManager: Time {
-    var tasks = taskList()
+class TaskManager:TimeDeclaration {
+    var tasks = TaskList()
     
     func launch() {
         print("\\Welcome to Task Manager/")
@@ -21,7 +21,7 @@ class TaskManager: Time {
     func mainMenu () {
         print("Please enter the number of what you would like to do -")
         lineSpaces(lines: 1)
-        print("""
+        let intResponse: Int = userInput(question: """
             1) View list of all tasks
             2) View list of all uncompleted tasks
             3) View list of all completed tasks
@@ -30,11 +30,7 @@ class TaskManager: Time {
             6) Delete a task
             7) Exit Program
             """)
-        lineSpaces(lines: 1)
-        guard let intResponse = Int(readLine()!) else {
-            mainMenu()
-            return
-        }
+        
         if intResponse > 7 || intResponse < 1 {
             mainMenu()
         }
@@ -64,7 +60,7 @@ class TaskManager: Time {
     }
     
     func presetTasks() {
-        tasks.allList.append(Task(name: "Finish the task Manager", description: "Add 7 options in the task manager", dueDate: formatter.date(from: "3/2/18")!))
+        tasks.list.append(Task(name: "Finish the task Manager", description: "Add 7 options in the task manager", dueDate: formatter.date(from: "3/2/18 5:00 pm")!))
     }
     
     func showTask(listOfTasks: [Task]) {
@@ -85,8 +81,6 @@ class TaskManager: Time {
             lineSpaces(lines: 1)
             for (index, task) in listOfTasks.enumerated() {
                 print("\(index + 1)) \(task.name) - \(task.description)\(task.status)")
-                print("\(task.name) is complete : \(task.isCompleted)")
-                print("\(task.name) is late: \(task.isLate)")
             }
         }
     }
@@ -105,10 +99,10 @@ class TaskManager: Time {
         lineSpaces(lines: 1)
         let dueDate: Date = userInput(question: """
             What is the task's due date?
-                (example: '9/11/01')
+                (example: '9/11/01 8:26 am')
             """)
         
-        tasks.allList.append(Task(name: name, description: description, dueDate: dueDate))
+        tasks.list.append(Task(name: name, description: description, dueDate: dueDate))
         lineSpaces(lines: 1)
         print(tasks.uncompletedList.last!.name + " has been started, and must be completed by : \(formatter.string(from: dueDate))")
     }
@@ -122,11 +116,8 @@ class TaskManager: Time {
         let task: Int = userInput(question: """
             What task number is completed?
             (Enter 'Esc' to go to Main menu)
-            """) - 1
+            """)
         
-//        if task.lowercased().contains("esc") {
-//            mainMenu()
-//        }
         
         if tasks.uncompletedList.count < task {
             mainMenu()
@@ -163,7 +154,7 @@ class TaskManager: Time {
         
         if sure.lowercased().contains("y") {
             print(tasks.allList[taskNumber].name + " - has been deleted")
-            tasks.allList.remove(at: taskNumber)
+            tasks.list.remove(at: taskNumber)
         }
     }
 }
