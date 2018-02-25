@@ -9,17 +9,17 @@
 import Foundation
 
 class Task: Timer {
-    var taskTime = TimeDeclaration()
+    private var taskTime = TimeDeclaration()
     let name : String
-    var isCompleted = false{
+    var isCompleted = false {
         didSet {
-            completedDate = taskTime.formatter.date(from: taskTime.formatter.string(from: Date()))
+            completedDate = taskTime.formatter.string(from: Date())
         }
     }
     var description : String
-    var completedDate : Date?
+    var completedDate = "not completed"
     var status : String {
-        return self.isCompleted ? " (Completed)" : self.isLate ? " (Late)" : " (In Progress)"
+        return self.isCompleted ? "Completed" : self.isLate ? "Late" : "In Progress"
     }
     var isLate : Bool {
         return self.dueDate < Date() && !self.isCompleted
@@ -28,7 +28,6 @@ class Task: Timer {
     init(name: String, description: String, dueDate: Date) {
         self.name = name
         self.description = description
-        self.completedDate = nil
         super.init(dueDate: dueDate)
     }
     

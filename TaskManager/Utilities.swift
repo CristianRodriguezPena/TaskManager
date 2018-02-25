@@ -33,7 +33,7 @@ func userInput<T>(question: String?) -> T {
         }
     }
     
-    if T.self == String.self && realResponse != "" {
+    if T.self == String.self {
         return realResponse as! T
     }
     lineSpaces(lines: 1)
