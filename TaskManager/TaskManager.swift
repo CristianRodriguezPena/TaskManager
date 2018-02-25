@@ -12,6 +12,7 @@ class TaskManager:TimeDeclaration {
     var tasks = TaskList()
     
     func launch() {
+        lineSpaces(lines: 1)
         print("\\Welcome to Task Manager/")
         lineSpaces(lines: 1)
         presetTasks()
@@ -36,11 +37,11 @@ class TaskManager:TimeDeclaration {
         }
             switch intResponse {
             case 1:
-                showTask(listOfTasks: tasks.allList)
+                showTasks(complete: nil)
             case 2:
-                showTask(listOfTasks: tasks.uncompletedList)
+                showTasks(complete: false)
             case 3:
-                showTask(listOfTasks: tasks.completedList)
+                showTasks(complete: true)
             case 4:
                 beginTask()
             case 5:
@@ -63,25 +64,28 @@ class TaskManager:TimeDeclaration {
         tasks.list.append(Task(name: "Finish the task Manager", description: "Add 7 options in the task manager", dueDate: formatter.date(from: "3/2/18 5:00 pm")!))
     }
     
-    func showTask(listOfTasks: [Task]) {
-        if listOfTasks.isEmpty {
-            if tasks.completedList.isEmpty {
-                if tasks.allList.isEmpty {
-                    print("No tasks added")
-                } else {
-                    print("No tasks completed")
-                }
-            } else  {
-                print("No tasks in progress")
-            }
-            
-        } else {
-            
-            print("Tasks:")
-            lineSpaces(lines: 1)
-            for (index, task) in listOfTasks.enumerated() {
-                print("\(index + 1)) \(task.name) - \(task.description)\(task.status)")
-            }
+    func showTasks(complete: Bool?) {
+        var usedList = tasks.allList
+        var words = "all tasks"
+        if complete != nil {
+            usedList = complete! ? tasks.completedList : tasks.uncompletedList
+            words = complete! ? "completed tasks" : "uncompleted tasks"
+        }
+        
+        if usedList.isEmpty {
+            print("The list of \(words) is empty")
+            return
+        }
+        
+        print("The list of \(words):")
+        printTasks(list: usedList)
+    }
+    
+    func printTasks(list: [Task]) {
+        lineSpaces(lines: 1)
+        
+        for (index, task) in list .enumerated() {
+            print("\(index + 1)) \(task.name) - \(task.description)\(task.status)")
         }
     }
     
@@ -91,9 +95,11 @@ class TaskManager:TimeDeclaration {
             (Enter 'Esc' to go to Main menu)
             Name of task:
             """)
+        
         if name.lowercased().contains("esc") {
             mainMenu()
         }
+        
         lineSpaces(lines: 1)
         let description: String = userInput(question: "Description of \(name):")
         lineSpaces(lines: 1)
@@ -102,28 +108,31 @@ class TaskManager:TimeDeclaration {
                 (example: '9/11/01 8:26 am')
             """)
         
-        tasks.list.append(Task(name: name, description: description, dueDate: dueDate))
-        lineSpaces(lines: 1)
-        print(tasks.uncompletedList.last!.name + " has been started, and must be completed by : \(formatter.string(from: dueDate))")
+        let finalCheck: String = userInput(question: """
+            Are you sure you want to begin '\(name)'?
+                        (Yes/No)
+            """)
+        if finalCheck.lowercased().contains("y") {
+            tasks.list.append(Task(name: name, description: description, dueDate: dueDate))
+            lineSpaces(lines: 1)
+            print(tasks.uncompletedList.last!.name + " has been started, and must be completed by : \(formatter.string(from: dueDate))")
+        }
     }
     
     func finishTask() {
-        showTask(listOfTasks: tasks.uncompletedList)
+        showTasks(complete: false)
         if tasks.uncompletedList.isEmpty {
             mainMenu()
         }
         
-        let task: Int = userInput(question: """
-            What task number is completed?
-            (Enter 'Esc' to go to Main menu)
-            """)
-        
+        lineSpaces(lines: 1)
+        let task: Int = userInput(question: "What task number is completed?") - 1
         
         if tasks.uncompletedList.count < task {
             mainMenu()
         }
         let sure: String = userInput(question: """
-            Are you sure '\(tasks.uncompletedList[task].name)' is done?
+            Are you sure '\(tasks.uncompletedList[task].name)' is comepleted?
                         (Yes/No)
             """)
         
@@ -133,8 +142,9 @@ class TaskManager:TimeDeclaration {
             tasks.uncompletedList[task].isCompleted = true
         }
     }
+    
     func deleteTask() {
-        showTask(listOfTasks: tasks.allList)
+        showTasks(complete: nil)
         if tasks.allList.isEmpty {
             mainMenu()
         }
@@ -143,10 +153,10 @@ class TaskManager:TimeDeclaration {
             What task do you want to delete?
             (Enter 'Esc' to go to Main menu)
             """) - 1
-        
         if tasks.allList.count < taskNumber {
             mainMenu()
         }
+        
         let sure: String = userInput(question: """
             Are you sure you want to delete \(tasks.allList[taskNumber].name)?
                             (Yes/No)

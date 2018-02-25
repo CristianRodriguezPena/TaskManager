@@ -10,10 +10,10 @@ import Foundation
 
 class TaskList {
     var uncompletedList : [Task] {
-        return allList.filter {!$0.isCompleted}
+        return list.filter {!$0.isCompleted}
     }
     var completedList : [Task] {
-        return allList.filter {$0.isCompleted}
+        return list.filter {$0.isCompleted}
     }
     var allList : [Task] {
         return list

@@ -21,7 +21,7 @@ class Timer {
 class TimeDeclaration {
     let formatter = DateFormatter()
     init() {
-        formatter.dateFormat = "MM/dd/yy H:mm a"
+        formatter.dateFormat = "MM/d/yy H:mm a"
         formatter.timeZone = TimeZone(abbreviation: "GMT")
     }
 }
