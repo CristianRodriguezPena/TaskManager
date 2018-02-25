@@ -84,8 +84,8 @@ class TaskManager: TimeDeclaration  {
         
         print("The list of \(words):")
         filters = TaskFilter(filter: usedList)
-        currentList = filters.filter(filter: taskExtension)
-        printTasks(list: currentList)
+        tasks.allList = filters.filter(filter: taskExtension)
+        printTasks(list: usedList)
         lineSpaces(lines: 1)
         
         let answer: String = userInput(question: """
@@ -96,6 +96,7 @@ class TaskManager: TimeDeclaration  {
             if !answer.lowercased().contains("y"){
                 mainMenu()
             } else {
+                printTasks(list: usedList)
                 return
             }
         }
@@ -156,7 +157,7 @@ class TaskManager: TimeDeclaration  {
         lineSpaces(lines: 1)
         let task: Int = userInput(question: "What task number is completed?") - 1
         
-        if tasks.uncompletedList.count < task {
+        if tasks.uncompletedList.count < task + 1 {
             mainMenu()
         }
         let sure: String = userInput(question: """
