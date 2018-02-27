@@ -8,10 +8,11 @@
 
 import Foundation
 
-class TaskManager: TimeDeclaration  {
+class TaskManager  {
     let tasks = TaskList()
-    var filters = TaskFilter(filter: [Task]())
-    var taskExtension = 1
+    private let time = TimeDeclaration()
+    private var filters = TaskFilter(filter: [Task]())
+    private var taskExtension = 1
     
     func launch() {
         lineSpaces(lines: 1)
@@ -141,7 +142,7 @@ class TaskManager: TimeDeclaration  {
             """)
         if finalCheck.lowercased().contains("y") {
             tasks.allList.append(Task(name: name, description: description, dueDate: dueDate))
-            print(tasks.uncompletedList.last!.name + " has been started, and must be completed by :" + (formatter.string(from: dueDate)))
+            print(tasks.uncompletedList.last!.name + " has been started, and must be completed by :" + (time.formatter.string(from: dueDate)))
         }
     }
     
@@ -192,5 +193,3 @@ class TaskManager: TimeDeclaration  {
         }
     }
 }
-
-

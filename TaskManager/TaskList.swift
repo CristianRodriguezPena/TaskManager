@@ -19,7 +19,8 @@ class TaskList {
     }
 }
 
-class TaskFilter: TimeDeclaration {
+class TaskFilter {
+    private let time = TimeDeclaration()
     private var out = [Task]()
     var filters : [Task]
     var taskExtention : [String]
@@ -28,7 +29,7 @@ class TaskFilter: TimeDeclaration {
         
         func sortByCompletionDate() -> [Task] {
             let uselessOnes = filters.filter {$0.completedDate == "not completed"}
-            let usefulOnes = filters.filter {!($0.completedDate == "not completed")}.sorted {formatter.date(from: $0.completedDate)! < formatter.date(from: $1.completedDate)!}
+            let usefulOnes = filters.filter {!($0.completedDate == "not completed")}.sorted {time.formatter.date(from: $0.completedDate)! < time.formatter.date(from: $1.completedDate)!}
             taskExtention = usefulOnes.map {"Completion date: " + $0.completedDate} + uselessOnes.map {$0.completedDate}
             
             return usefulOnes + uselessOnes
@@ -36,14 +37,14 @@ class TaskFilter: TimeDeclaration {
         
         func sortByStartDate() -> [Task] {
             out = filters.sorted {$0.initDate < $1.initDate}
-            taskExtention = out.map {"Start date: " + formatter.string(from: $0.initDate)}
+            taskExtention = out.map {"Start date: " + time.formatter.string(from: $0.initDate)}
             
             return out
         }
         
         func sortByDueDate() -> [Task] {
             out = filters.sorted {$0.dueDate < $1.dueDate}
-            taskExtention = out.map {"Due date: " + formatter.string(from: $0.dueDate)}
+            taskExtention = out.map {"Due date: " + time.formatter.string(from: $0.dueDate)}
             
             return out
         }
