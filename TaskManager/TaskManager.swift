@@ -2,17 +2,16 @@
 //  TaskManager.swift
 //  TaskManager
 //
-//  Created by Cristian Rodriguez on 2/20/18.
+//  Created by Cristian Rodriguez on 2/22/18.
 //  Copyright © 2018 Cristian Rodriguez. All rights reserved.
 //
 
 import Foundation
 
 class TaskManager: TimeDeclaration  {
-    var tasks = TaskList()
+    let tasks = TaskList()
     var filters = TaskFilter(filter: [Task]())
     var taskExtension = 1
-    var currentList = [Task]()
     
     func launch() {
         lineSpaces(lines: 1)
@@ -34,16 +33,17 @@ class TaskManager: TimeDeclaration  {
             7) Exit Program
             """)
         
-        if intResponse > 7 || intResponse < 1 {
+        if !((1...7).contains(intResponse)) {
             mainMenu()
         }
+        
             switch intResponse {
             case 1:
-                sortingCheck(question: "Press 'Enter' to go back to main menu", completed: nil)
+                showTasks(question: "Press 'Enter' to go back to main menu", completed: nil)
             case 2:
-                sortingCheck(question: "Press 'Enter' to go back to main menu", completed: false)
+                showTasks(question: "Press 'Enter' to go back to main menu", completed: false)
             case 3:
-                sortingCheck(question: "Press 'Enter' to go back to main menu", completed: true)
+                showTasks(question: "Press 'Enter' to go back to main menu", completed: true)
             case 4:
                 beginTask()
             case 5:
@@ -52,7 +52,7 @@ class TaskManager: TimeDeclaration  {
                 deleteTask()
             case 7:
                 print("Goodbye")
-                break
+                return
             default:
                 mainMenu()
         }
@@ -69,10 +69,10 @@ class TaskManager: TimeDeclaration  {
         }
     }
     
-    func sortingCheck(question: String, completed: Bool?) {
+    func showTasks(question: String, completed: Bool?) {
         var usedList = tasks.allList
-
         var words = "all tasks"
+        
         if completed != nil {
             usedList = completed! ? tasks.completedList : tasks.uncompletedList
             words = completed! ? "completed tasks" : "uncompleted tasks"
@@ -92,16 +92,22 @@ class TaskManager: TimeDeclaration  {
             \(question)
             (Enter '*' to resort the list)
             """)
-        if !answer.lowercased().contains("*") {
-            if !answer.lowercased().contains("y"){
-                mainMenu()
-            } else {
-                printTasks(list: usedList)
-                return
-            }
-        }
         
-        filters = TaskFilter(filter: usedList)
+        if answer.lowercased().contains("*") {
+            sorting(list: usedList)
+            showTasks(question: question, completed: completed)
+        }
+        if answer.lowercased().contains("y"){
+            printTasks(list: usedList)
+            return
+        } else {
+            mainMenu()
+        }
+    }
+    
+    func sorting(list: [Task]) {
+        filters = TaskFilter(filter: list)
+        
         repeat {
             taskExtension = userInput(question: """
             How would you like to sort the list?
@@ -112,21 +118,13 @@ class TaskManager: TimeDeclaration  {
             4) by status
             5) by completed date
             """)
+            
         } while !(1...5).contains(taskExtension)
-
-        sortingCheck(question: question, completed: completed)
     }
     
     func beginTask() {
         lineSpaces(lines: 1)
-        let name: String  = userInput(question: """
-            (Enter 'Esc' to go to Main menu)
-            Name of task:
-            """)
-        
-        if name.lowercased().contains("esc") {
-            mainMenu()
-        }
+        let name: String  = userInput(question: "Name of task:")
         
         lineSpaces(lines: 1)
         let description: String = userInput(question: "Description of \(name):")
@@ -135,6 +133,7 @@ class TaskManager: TimeDeclaration  {
             What is the task's due date?
                 (example: '9/11/01 8:26 am')
             """)
+        lineSpaces(lines: 1)
         
         let finalCheck: String = userInput(question: """
             Are you sure you want to begin '\(name)'?
@@ -142,14 +141,13 @@ class TaskManager: TimeDeclaration  {
             """)
         if finalCheck.lowercased().contains("y") {
             tasks.allList.append(Task(name: name, description: description, dueDate: dueDate))
-            lineSpaces(lines: 1)
-            print(tasks.uncompletedList.last!.name + " has been started, and must be completed by : \(formatter.string(from: dueDate))")
+            print(tasks.uncompletedList.last!.name + " has been started, and must be completed by :" + (formatter.string(from: dueDate)))
         }
     }
     
     func finishTask() {
         
-        sortingCheck(question: "do you want to finish a task?", completed: false)
+        showTasks(question: "Do you want to finish a task?", completed: false)
         if tasks.uncompletedList.isEmpty {
             return
         }
@@ -158,7 +156,7 @@ class TaskManager: TimeDeclaration  {
         let task: Int = userInput(question: "What task number is completed?") - 1
         
         if tasks.uncompletedList.count < task + 1 {
-            mainMenu()
+            return
         }
         let sure: String = userInput(question: """
             Are you sure '\(tasks.uncompletedList[task].name)' is comepleted?
@@ -173,14 +171,14 @@ class TaskManager: TimeDeclaration  {
     }
     
     func deleteTask() {
-        sortingCheck(question: "Do you want to delete a task?", completed: nil)
+        showTasks(question: "Do you want to delete a task?", completed: nil)
         if tasks.allList.isEmpty {
-            mainMenu()
+            return
         }
         
         let taskNumber: Int = userInput(question: "What task do you want to delete?") - 1
         if tasks.allList.count < taskNumber {
-            mainMenu()
+            deleteTask()
         }
         
         let sure: String = userInput(question: """
