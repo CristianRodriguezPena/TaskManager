@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TaskManager: TimeDeclaration  {
+class TaskManager: TimeDeclaration  { //Having the task manager inherit from the TimeDeclaration class seems unnecessary here. Would be better to make an instance of the TimeDeclaration class as a member variable for the task maanger class and utilize it that way.
     let tasks = TaskList()
     var filters = TaskFilter(filter: [Task]())
     var taskExtension = 1
@@ -153,6 +153,8 @@ class TaskManager: TimeDeclaration  {
         }
         
         lineSpaces(lines: 1)
+        
+        //Same as with delete, need to check input here, as the app can crash if an invalid index is entered when the program tries to get the name for the uncompleted task
         let task: Int = userInput(question: "What task number is completed?") - 1
         
         if tasks.uncompletedList.count < task + 1 {
@@ -176,6 +178,7 @@ class TaskManager: TimeDeclaration  {
             return
         }
         
+        //Need to check input here, as the app can crash if an invalid index is entered: for example, -1
         let taskNumber: Int = userInput(question: "What task do you want to delete?") - 1
         if tasks.allList.count < taskNumber {
             deleteTask()
@@ -186,6 +189,7 @@ class TaskManager: TimeDeclaration  {
                             (Yes/No)
             """)
         
+        //Might want an else case to let the user know the task hasn't been deleted if they don't say yes
         if sure.lowercased().contains("y") {
             print(tasks.allList[taskNumber].name + " - has been deleted")
             tasks.allList.remove(at: taskNumber)

@@ -20,11 +20,13 @@ class TaskList {
 }
 
 class TaskFilter: TimeDeclaration {
-    private var out = [Task]()
+    private var out = [Task]() //Rename this for clarity. Maybe output instead of out?
     var filters : [Task]
     var taskExtention : [String]
 
     func filter(filter: Int) -> [Task] {
+        
+        //Be careful with declaring functions inside of other functions. This works here because you never need to access the inner functions outside of the filter function, but you would be unable to if you did ever need to.
         
         func sortByCompletionDate() -> [Task] {
             let uselessOnes = filters.filter {$0.completedDate == "not completed"}

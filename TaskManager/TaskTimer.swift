@@ -17,6 +17,7 @@ class Timer {
     }
 }
 
+//The name of this class is confusing to me. I can see that it serves as a class that initializes a date formatter with a given format and timezone, but as a class it's hard to know what a "TimeDeclaration" is as an object. Might make more sense to call it "Formatter" or something to that effect.
 class TimeDeclaration {
     let formatter = DateFormatter()
     init() {

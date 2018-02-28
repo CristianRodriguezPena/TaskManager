@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Task: Timer {
+class Task: Timer { //From the object oriented side of things, it doesn't make much sense to have a Task class that inherits from the Timer class since that relationship doesn't correspond to how things work in the real world. Looking at the timer class, the functionality from it could be integrated into this class and would probably be easier to understand.
     private var taskTime = TimeDeclaration()
     let name : String
     var isCompleted = false {

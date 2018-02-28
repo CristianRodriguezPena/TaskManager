@@ -8,6 +8,6 @@
 
 import Foundation
 
-let itBegin = TaskManager()
+let itBegin = TaskManager() //Would change the variable naming here. 'itBegin' doesn't really explain what this variable is
 itBegin.launch()
 
