@@ -7,6 +7,9 @@
 //
 
 import Foundation
+
+//I dont understand what this does
+
 class Timer {
     let initDate : Date
     let dueDate : Date

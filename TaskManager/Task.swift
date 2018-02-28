@@ -8,6 +8,8 @@
 
 import Foundation
 
+//👍
+
 class Task: Timer {
     private var taskTime = TimeDeclaration()
     let name : String

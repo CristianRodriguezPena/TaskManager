@@ -8,6 +8,8 @@
 
 import Foundation
 
+//As a whole your project is to convoluted. The philosiphy of object oriented programming is to model real world objects out in code so that reading code is not confusing. OOP is not really the "best" way to write code or is it the most effecient. Code is written this way for the readability of other developers. That being said the code you have written is very well done and I would consider this to be very well advanced beyond what we have taught so good job 😀. For improvments on this file I would not have Task Manager inherit from a time declaration. That doesn't make sense to me. I would suggest instead of using a class for every piece of code look up using extensions or simply extracting functions to the utlilities file. For instance the task timer class from what I can tell only really works as a date formatter so that should just be a public functions. Otherwise very good job 👍
+
 class TaskManager: TimeDeclaration  {
     var tasks = TaskList()
     var filters = TaskFilter(filter: [Task]())

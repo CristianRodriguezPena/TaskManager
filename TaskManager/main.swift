@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+//Rename this to something like start 
 var itBegin = TaskManager()
 itBegin.launch()
 

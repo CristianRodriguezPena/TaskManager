@@ -8,6 +8,8 @@
 
 import Foundation
 
+//Multiple classes in the samfe file break them up
+
 class TaskList {
     var uncompletedList : [Task] {
         return allList.filter {!$0.isCompleted}
@@ -18,6 +20,8 @@ class TaskList {
     var allList = [Task]()
 }
 
+
+//Filtering Tasks should be the responsibility of the Task Manager. The task manager should do anything involoving managing the tasks. Look up CRUD. (Create, Read, Update, Destroy). When using the task manager it should be the primary directive of that class to handle those responsiblities. The task manager should also deal with how it returns the data. I would create a function that takes an enum as a parameter where you can select which filtered array you would like to return.
 class TaskFilter {
     private var out = [Task]()
     private let time = TimeDeclaration()
@@ -50,6 +54,9 @@ class TaskFilter {
             taskExtention = filters.map {$0.status}
             return filters.sorted {$0.name < $1.name}
         }
+        
+        //Where's case 1?
+        
         switch filter {
         case 2:
             return sortByStartDate()
