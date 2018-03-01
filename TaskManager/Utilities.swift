@@ -14,6 +14,7 @@ func lineSpaces(lines: Int) {
     }
 }
 
+// The responsibility of this fundtion shouldn't be to print out a question and accept input. Just to accept input. Remove the question param.
 func userInput<T>(question: String?) -> T {
     let time = TimeDeclaration()
     if !(question == nil) {

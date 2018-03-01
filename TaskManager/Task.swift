@@ -9,6 +9,18 @@
 import Foundation
 
 class Task: Timer {
+    
+    /*
+ 
+        - Group your properties by type. Keep constants, variables, and computed properties separate in groups.
+        - Never include a space after the color in a type declaration. i.e. let name: String instead of let name : String
+        - completedDate should be of type Date?
+        -
+     
+     */
+    
+    
+    
     private var taskTime = TimeDeclaration()
     let name : String
     var isCompleted = false {

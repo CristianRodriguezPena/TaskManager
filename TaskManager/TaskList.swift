@@ -9,6 +9,11 @@
 import Foundation
 
 class TaskList {
+    
+    /*
+     - replace list with Tasks i.e. allTasks, completedTasks
+ */
+    
     var allList = [Task]()
     
     var uncompletedList : [Task] {
@@ -24,7 +29,10 @@ class TaskFilter {
     private var out = [Task]()
     var filters : [Task]
     var taskExtention : [String]
-
+    
+    // this is spaghetti.
+    // pull the functions out and make an enum for filtering.
+    // or just trust the developer (you) to use the right filter function.
     func filter(filter: Int) -> [Task] {
         
         func sortByCompletionDate() -> [Task] {
