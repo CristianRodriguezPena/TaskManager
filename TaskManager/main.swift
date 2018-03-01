@@ -8,6 +8,7 @@
 
 import Foundation
 
+// 😏 clever
 let itBegin = TaskManager()
 itBegin.launch()
 

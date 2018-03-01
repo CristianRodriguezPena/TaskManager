@@ -10,9 +10,9 @@ import Foundation
 
 class TaskManager  {
     let tasks = TaskList()
-    private let time = TimeDeclaration()
-    private var filters = TaskFilter(filter: [Task]())
-    private var taskExtension = 1
+    private let time = TimeDeclaration() // so weird.
+    private var filters = TaskFilter(filter: [Task]()) // also weird. why are you passing in an empty array? idk. wouldn't you want to filter the tasks array above?
+    private var taskExtension = 1 // what?
     
     func launch() {
         lineSpaces(lines: 1)
@@ -34,10 +34,16 @@ class TaskManager  {
             7) Exit Program
             """)
         
+        // very weird way to validate this
+        // it's cool, but useless.
+        // why not something simple like
+        // if reponse < 1 || response > 7
         if !((1...7).contains(intResponse)) {
             mainMenu()
         }
         
+        // not tabbed properly
+        // this could be remodled into an "Actions" enum or something. Should think more about this.
             switch intResponse {
             case 1:
                 showTasks(question: "Press 'Enter' to go back to main menu", completed: nil)
@@ -62,6 +68,8 @@ class TaskManager  {
         mainMenu()
     }
     
+    // you could also just extend Array and if the array is a list of tasks, change the description
+    // either way, i would change the param to be tasks and remove the need to include it in the function call. (put an underscore in front of it)
     func printTasks(list: [Task]) {
         lineSpaces(lines: 1)
         
@@ -92,7 +100,7 @@ class TaskManager  {
         let answer: String = userInput(question: """
             \(question)
             (Enter '*' to resort the list)
-            """)
+            """) // add .lowercased to this to avoid needing to do it afterward?
         
         if answer.lowercased().contains("*") {
             sorting(list: usedList)
@@ -106,6 +114,8 @@ class TaskManager  {
         }
     }
     
+    // what is "sorting". that's not a function. you don't "sorting" something. you can sort something.
+    // tasks is a better name than list.
     func sorting(list: [Task]) {
         filters = TaskFilter(filter: list)
         
@@ -120,9 +130,10 @@ class TaskManager  {
             5) by completed date
             """)
             
-        } while !(1...5).contains(taskExtension)
+        } while !(1...5).contains(taskExtension) // again, a weird way of doing validation. it works, but maybe not the most simple.
     }
     
+    // createTask would be a better name.
     func beginTask() {
         lineSpaces(lines: 1)
         let name: String  = userInput(question: "Name of task:")
