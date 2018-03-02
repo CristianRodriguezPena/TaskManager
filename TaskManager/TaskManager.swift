@@ -44,7 +44,6 @@ class TaskManager  {
         func sortByName() {
             allTasks = allTasks.sorted {$0.name < $1.name}
             taskExtension = allTasks.map {$0.status}
-            
         }
         
         switch filterExtension {
@@ -72,7 +71,7 @@ class TaskManager  {
     func mainMenu () {
         print("Please enter the number of what you would like to do -")
         lineSpaces(lines: 1)
-        let intResponse: Int = userInput(question: """
+        let intResponse: Int = getAnswer(question: """
             1) View list of all tasks
             2) View list of all uncompleted tasks
             3) View list of all completed tasks
@@ -82,32 +81,30 @@ class TaskManager  {
             7) Exit Program
             """)
         
-        if !((1...7).contains(intResponse)) {
-            mainMenu()
+        if intResponse > 7 || intResponse < 1 {
+            return mainMenu()
         }
         
             switch intResponse {
             case 1:
-                showTasks(question: "Press 'Enter' to go back to main menu", completed: nil)
+                showAndAsk(question: "Press 'Enter' to go back to main menu", completed: nil)
             case 2:
-                showTasks(question: "Press 'Enter' to go back to main menu", completed: false)
+                showAndAsk(question: "Press 'Enter' to go back to main menu", completed: false)
             case 3:
-                showTasks(question: "Press 'Enter' to go back to main menu", completed: true)
+                showAndAsk(question: "Press 'Enter' to go back to main menu", completed: true)
             case 4:
                 beginTask()
             case 5:
                 finishTask()
             case 6:
                 deleteTask()
-            case 7:
+            default:
                 print("Goodbye")
                 return
-            default:
-                mainMenu()
         }
         lineSpaces(lines: 1)
-        let _ :String = userInput(question: "Press 'Enter' to go back to main menu")
-        mainMenu()
+        let _ :String = getAnswer(question: "Press 'Enter' to go back to main menu")
+        return mainMenu()
     }
     
     func printTasks(list: [Task]) {
@@ -118,45 +115,44 @@ class TaskManager  {
         }
     }
     
-    func showTasks(question: String, completed: Bool?) {
+    func showAndAsk(question: String, completed: Bool?) {
         sortTasks()
-        var usedList = allTasks
+        var relevantList = allTasks
         var words = "all tasks"
         
         if completed != nil {
-            usedList = completed! ? completedList : incompletedList
+            relevantList = completed! ? completedList : incompletedList
             words = completed! ? "completed tasks" : "incompleted tasks"
         }
-        if usedList.isEmpty {
+        if relevantList.isEmpty {
             print("The list of \(words) is empty")
             return
         }
         
         print("The list of \(words):")
         
-        printTasks(list: usedList)
+        printTasks(list: relevantList)
         lineSpaces(lines: 1)
         
-        let answer :String = userInput(question: """
+        let answer :String = getAnswer(question: """
             \(question)
             (Enter '*' to resort the list)
             """)
         
-        if answer.lowercased().contains("*") {
+        if answer.contains("*") {
             sort()
-            showTasks(question: question, completed: completed)
+            showAndAsk(question: question, completed: completed)
         }
         if answer.lowercased().contains("y"){
-            printTasks(list: usedList)
+            printTasks(list: relevantList)
         } else {
             print("That is not a valid input")
-            return
         }
     }
     
     func sort() {
         repeat {
-            filterExtension = userInput(question: """
+            filterExtension = getAnswer(question: """
             How would you like to sort the list?
 
             1) by name
@@ -166,47 +162,47 @@ class TaskManager  {
             5) by completed date
             """)
             
-        } while !(1...5).contains(filterExtension)
+        } while filterExtension > 5 || filterExtension < 1
     }
     
     func beginTask() {
         lineSpaces(lines: 1)
-        let name :String  = userInput(question: "Name of task:")
+        let name :String  = getAnswer(question: "Name of task:")
         
         lineSpaces(lines: 1)
-        let description: String = userInput(question: "Description of \(name):")
+        let description: String = getAnswer(question: "Description of \(name):")
         lineSpaces(lines: 1)
-        let dueDate :Date = userInput(question: """
+        let dueDate :Date = getAnswer(question: """
             What is the task's due date?
                 (example: '9/11/01 8:26 am')
             """)
         lineSpaces(lines: 1)
         
-        let finalCheck :String = userInput(question: """
+        let finalCheck :String = getAnswer(question: """
             Are you sure you want to begin '\(name)'?
                         (Yes/No)
             """)
         if finalCheck.lowercased().contains("y") {
             allTasks.append(Task(name: name, description: description, dueDate: dueDate))
-            print(incompletedList.last!.name + " has been started, and must be completed by :" + (formatter.string(from: dueDate)))
+            print(incompletedList.last!.name + " has been started, and must be completed by: " + (formatter.string(from: dueDate)))
         }
     }
     
     func finishTask() {
         
-        showTasks(question: "Do you want to finish a task? (Yes/no)", completed: false)
+        showAndAsk(question: "Do you want to finish a task? (Yes/no)", completed: false)
         if incompletedList.isEmpty {
             return
         }
         
         lineSpaces(lines: 1)
-        let task :Int = userInput(question: "What task number is completed?") - 1
+        let task :Int = getAnswer(question: "What task number is completed?") - 1
         
         if incompletedList.count < task + 1 {
             print("That is not valid input ")
-            return
+            return finishTask()
         }
-        let sure :String = userInput(question: """
+        let sure :String = getAnswer(question: """
             Are you sure '\(incompletedList[task].name)' is comepleted?
                         (Yes/No)
             """)
@@ -219,17 +215,17 @@ class TaskManager  {
     }
     
     func deleteTask() {
-        showTasks(question: "Do you want to delete a task? (Yes/no)", completed: nil)
+        showAndAsk(question: "Do you want to delete a task? (Yes/no)", completed: nil)
         if allTasks.isEmpty {
             return 
         }
         
-        let taskNumber :Int = userInput(question: "What task do you want to delete?") - 1
+        let taskNumber :Int = getAnswer(question: "What task do you want to delete?") - 1
         if allTasks.count < taskNumber {
-            deleteTask()
+            return deleteTask()
         }
         
-        let sure :String = userInput(question: """
+        let sure :String = getAnswer(question: """
             Are you sure you want to delete \(allTasks[taskNumber].name)?
                             (Yes/No)
             """)

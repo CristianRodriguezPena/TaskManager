@@ -11,7 +11,7 @@ import Foundation
 class Task {
     let name :String
     var description :String
-    let `e :Date
+    let startDate :Date
     let dueDate :Date
     var isCompleted = false {
         didSet {

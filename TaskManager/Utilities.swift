@@ -14,7 +14,7 @@ func lineSpaces(lines: Int) {
     }
 }
 
-func userInput<T>(question: String?) -> T {
+func getAnswer<T>(question: String?) -> T {
     if !(question == nil) {
         print(question!)
     }
@@ -38,7 +38,7 @@ func userInput<T>(question: String?) -> T {
     
     lineSpaces(lines: 1)
     print("That is not a valid input, please enter an \(T.self)")
-    return userInput(question: question)
+    return getAnswer(question: question)
 }
 
 func bubbleSort(list: inout[Int], startAt: Int) {
