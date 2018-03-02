@@ -11,3 +11,7 @@ import Foundation
 let itBegin = TaskManager()
 itBegin.launch()
 
+var ints = [4,5,6,89,4,8,0,4,4,9,0,]
+bubbleSort(list: &ints, startAt: 0)
+
+

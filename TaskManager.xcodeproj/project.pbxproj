@@ -11,8 +11,6 @@
 		A448FF78203CB89000C4C16A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A448FF77203CB89000C4C16A /* main.swift */; };
 		A448FF7F203CC4FC00C4C16A /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = A448FF7E203CC4FC00C4C16A /* Task.swift */; };
 		A448FF83203D172500C4C16A /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A448FF82203D172500C4C16A /* TaskManager.swift */; };
-		A448FF85203D219100C4C16A /* TaskTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A448FF84203D219100C4C16A /* TaskTimer.swift */; };
-		A448FF89203D301700C4C16A /* TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A448FF88203D301700C4C16A /* TaskList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,8 +31,6 @@
 		A448FF77203CB89000C4C16A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		A448FF7E203CC4FC00C4C16A /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		A448FF82203D172500C4C16A /* TaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
-		A448FF84203D219100C4C16A /* TaskTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTimer.swift; sourceTree = "<group>"; };
-		A448FF88203D301700C4C16A /* TaskList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,8 +65,6 @@
 			children = (
 				A448FF77203CB89000C4C16A /* main.swift */,
 				A448FF82203D172500C4C16A /* TaskManager.swift */,
-				A448FF88203D301700C4C16A /* TaskList.swift */,
-				A448FF84203D219100C4C16A /* TaskTimer.swift */,
 				A448FF7E203CC4FC00C4C16A /* Task.swift */,
 				A4454653203DFE9B00459D48 /* Utilities.swift */,
 			);
@@ -138,9 +132,7 @@
 				A448FF7F203CC4FC00C4C16A /* Task.swift in Sources */,
 				A448FF78203CB89000C4C16A /* main.swift in Sources */,
 				A448FF83203D172500C4C16A /* TaskManager.swift in Sources */,
-				A448FF89203D301700C4C16A /* TaskList.swift in Sources */,
 				A4454654203DFE9B00459D48 /* Utilities.swift in Sources */,
-				A448FF85203D219100C4C16A /* TaskTimer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

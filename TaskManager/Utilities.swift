@@ -15,18 +15,21 @@ func lineSpaces(lines: Int) {
 }
 
 func userInput<T>(question: String?) -> T {
-    let time = TimeDeclaration()
     if !(question == nil) {
         print(question!)
     }
     
     let realResponse = readLine()!
-    if T.self == Int.self, let input = Int(realResponse)  {
+    if T.self == Int.self {
+        if let input = Int(realResponse)  {
             return input as! T
+        }
     }
     
-    if T.self == Date.self, let input = time.formatter.date(from: realResponse) {
+    if T.self == Date.self {
+        if let input = formatter.date(from: realResponse) {
             return input as! T
+        }
     }
     
     if T.self == String.self {
@@ -38,9 +41,23 @@ func userInput<T>(question: String?) -> T {
     return userInput(question: question)
 }
 
+func bubbleSort(list: inout[Int], startAt: Int) {
+    if startAt == list.count - 1 {
+        return
+    }
+    if list[startAt] > list[startAt + 1] {
+        list.swapAt(startAt, startAt + 1)
+        bubbleSort(list: &list, startAt: startAt == 0 ? 0 : startAt - 1 )
+    } else {
+        bubbleSort(list: &list, startAt: startAt + 1)
+    }
+}
 
-
-
-
+public var formatter : DateFormatter {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "MM/d/yy h:mm a"
+    formatter.timeZone = TimeZone(abbreviation: "EST")
+    return formatter
+}
 
 
